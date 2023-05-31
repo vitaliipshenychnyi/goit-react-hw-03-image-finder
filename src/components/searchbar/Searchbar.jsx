@@ -12,11 +12,9 @@ export class Searchbar extends Component {
   // функція відправки даних до App
   handleSubmit = event => {
     event.preventDefault();
-
     if (this.state.text.trim() === '') {
       return toast.warn('Ви не ввели текст для пошуку!');
     }
-
     this.props.onSubmit(this.state.text);
     this.setState({ text: '' });
   };
