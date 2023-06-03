@@ -12,7 +12,7 @@ export class ImageGallery extends Component {
   };
 
   // метод додавання зображень
-  addPage = async page => {
+  addPictures = async page => {
     const { textForSearch } = this.props;
 
     try {
@@ -62,7 +62,7 @@ export class ImageGallery extends Component {
       return (
         <ul className="gallery">
           <ImageGalleryItem pictures={pictures} error={error} />
-          <Button morePictures={this.addPage} />
+          <Button morePictures={this.addPictures} />
         </ul>
       );
     if (status === 'rejected') return <p>{error}</p>;
