@@ -3,10 +3,10 @@ import { Component } from 'react';
 export class Button extends Component {
   state = { page: 2 };
 
-  // функція відправки даних до Арр
+  // функція додавання page та відправки даних до ImageGallery
   addPictures = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
-    this.props.add(this.state.page);
+    this.props.morePictures(this.state.page);
   };
 
   render() {

@@ -11,14 +11,35 @@ export class ImageGallery extends Component {
     status: 'idle',
   };
 
-  async componentDidUpdate(prevProps, _) {
-    const { textForSearch, page } = this.props;
+  // метод додавання зображень
+  addPage = async page => {
+    const { textForSearch } = this.props;
+
+    try {
+      const pictures = await getPictures(textForSearch, page);
+      if (!pictures.length) {
+        this.setState({
+          error: `Зображення ${textForSearch} відсутні`,
+          status: 'rejected',
+        });
+      } else {
+        this.setState(prevState => ({
+          pictures: [...prevState.pictures, ...pictures],
+          status: 'resolved',
+        }));
+      }
+    } catch (error) {
+      this.setState({ error: error.message, status: 'rejected' });
+    }
+  };
+
+  async componentDidUpdate(prevProps, prevState) {
+    const { textForSearch } = this.props;
 
     if (prevProps !== this.props) {
       this.setState({ status: 'pending' });
-      // this.setState({ pictures: null });
       try {
-        const pictures = await getPictures(textForSearch, page);
+        const pictures = await getPictures(textForSearch, this.state.page);
         if (!pictures.length) {
           this.setState({
             error: `Зображення ${textForSearch} відсутні`,
@@ -27,7 +48,6 @@ export class ImageGallery extends Component {
         } else {
           this.setState({ pictures, status: 'resolved' });
         }
-        // this.props.onSearch(pictures);
       } catch (error) {
         this.setState({ error: error.message, status: 'rejected' });
       }
@@ -42,7 +62,7 @@ export class ImageGallery extends Component {
       return (
         <ul className="gallery">
           <ImageGalleryItem pictures={pictures} error={error} />
-          <Button />
+          <Button morePictures={this.addPage} />
         </ul>
       );
     if (status === 'rejected') return <p>{error}</p>;
