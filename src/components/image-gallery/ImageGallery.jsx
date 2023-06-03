@@ -1,34 +1,50 @@
 import { Component } from 'react';
 import { ImageGalleryItem } from 'components/image-gallery-item/ImageGalleryItem';
-import { fetchPictures } from 'api/api';
+import { getPictures } from 'api/api';
+import { Loader } from 'components/loader/Loader';
+import { Button } from 'components/button/Button';
 
 export class ImageGallery extends Component {
   state = {
     pictures: null,
     error: null,
+    status: 'idle',
   };
 
   async componentDidUpdate(prevProps, _) {
-    const { textSearch, page } = this.props;
+    const { textForSearch, page } = this.props;
 
-    if (prevProps.textSearch !== textSearch) {
+    if (prevProps !== this.props) {
+      this.setState({ status: 'pending' });
+      // this.setState({ pictures: null });
       try {
-        const pictures = await fetchPictures(textSearch, page);
-        this.setState({ pictures });
-        this.props.onSearch(pictures);
+        const pictures = await getPictures(textForSearch, page);
+        if (!pictures.length) {
+          this.setState({
+            error: `Зображення ${textForSearch} відсутні`,
+            status: 'rejected',
+          });
+        } else {
+          this.setState({ pictures, status: 'resolved' });
+        }
+        // this.props.onSearch(pictures);
       } catch (error) {
-        this.setState({ error });
+        this.setState({ error: error.message, status: 'rejected' });
       }
     }
   }
 
   render() {
-    const { pictures, error } = this.state;
+    const { pictures, error, status } = this.state;
 
-    return (
-      <ul className="gallery">
-        <ImageGalleryItem pictures={pictures} error={error} />
-      </ul>
-    );
+    if (status === 'pending') return <Loader />;
+    if (status === 'resolved')
+      return (
+        <ul className="gallery">
+          <ImageGalleryItem pictures={pictures} error={error} />
+          <Button />
+        </ul>
+      );
+    if (status === 'rejected') return <p>{error}</p>;
   }
 }

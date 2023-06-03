@@ -5,8 +5,8 @@ export class Searchbar extends Component {
   state = { text: '' };
 
   // отримання значення з поля введення та запис до state
-  handleSearch = event => {
-    this.setState({ text: event.currentTarget.value.toLowerCase() });
+  handleSearch = ({ currentTarget: { value } }) => {
+    this.setState({ text: value.toLowerCase() });
   };
 
   // функція відправки даних до App
@@ -15,8 +15,8 @@ export class Searchbar extends Component {
     if (this.state.text.trim() === '') {
       return toast.warn('Ви не ввели текст для пошуку!');
     }
-    this.props.onSubmit(this.state.text);
-    this.setState({ text: '' });
+    this.props.onSubmit(this.state.text); // прокидання до Арр state
+    this.setState({ text: '' }); // очищення поля пошуку
   };
 
   render() {
