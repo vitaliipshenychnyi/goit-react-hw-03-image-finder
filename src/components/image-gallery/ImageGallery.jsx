@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { ImageGalleryItem } from 'components/image-gallery-item/ImageGalleryItem';
 import { getPictures } from 'api/api';
 import { Loader } from 'components/loader/Loader';
 import { Button } from 'components/button/Button';
+import { GalleryList } from './ImageGallery.styled';
 
 export class ImageGallery extends Component {
   state = {
@@ -33,7 +35,7 @@ export class ImageGallery extends Component {
     }
   };
 
-  async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, _) {
     const { textForSearch } = this.props;
 
     if (prevProps !== this.props) {
@@ -60,11 +62,15 @@ export class ImageGallery extends Component {
     if (status === 'pending') return <Loader />;
     if (status === 'resolved')
       return (
-        <ul className="gallery">
+        <GalleryList>
           <ImageGalleryItem pictures={pictures} error={error} />
           <Button morePictures={this.addPictures} />
-        </ul>
+        </GalleryList>
       );
     if (status === 'rejected') return <p>{error}</p>;
   }
 }
+
+ImageGallery.propTypes = {
+  textForSearch: PropTypes.string.isRequired,
+};

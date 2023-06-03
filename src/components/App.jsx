@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Searchbar } from './searchbar/Searchbar';
 import { ImageGallery } from './image-gallery/ImageGallery';
+import { Wrapper } from './App.styled';
 
 export class App extends Component {
   state = { textForSearch: '' };
@@ -14,12 +15,12 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <Wrapper>
         <Searchbar onSubmit={this.receiveTextForSearch} />
         <ImageGallery textForSearch={this.state.textForSearch} />
 
         <ToastContainer autoClose={3000} />
-      </div>
+      </Wrapper>
     );
   }
 }

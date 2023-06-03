@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { BtnLoadMore } from './Button.styled';
 
 export class Button extends Component {
   state = { page: 2 };
@@ -11,9 +13,13 @@ export class Button extends Component {
 
   render() {
     return (
-      <button type="button" onClick={this.addPage}>
+      <BtnLoadMore type="button" onClick={this.addPage}>
         Load more
-      </button>
+      </BtnLoadMore>
     );
   }
 }
+
+Button.propTypes = {
+  morePictures: PropTypes.func.isRequired,
+};
