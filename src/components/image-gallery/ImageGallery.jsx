@@ -5,20 +5,13 @@ import { getPictures } from 'api/api';
 import { Loader } from 'components/loader/Loader';
 import { Button } from 'components/button/Button';
 import { GalleryList } from './ImageGallery.styled';
-// import { ModalImg } from 'components/modal/Modal';
 
 export class ImageGallery extends Component {
   state = {
     pictures: null,
     error: null,
     status: 'idle',
-    // showModal: false,
   };
-
-  // метод вкл/викл модального вікна
-  // toggleModal = () => {
-  //   this.setState(state => ({ showModal: !this.state.showModal }));
-  // };
 
   // метод додавання зображень
   addPictures = async page => {
@@ -55,7 +48,6 @@ export class ImageGallery extends Component {
             status: 'rejected',
           });
         } else {
-          // console.log(pictures);
           this.setState({ pictures, status: 'resolved' });
         }
       } catch (error) {
@@ -80,9 +72,6 @@ export class ImageGallery extends Component {
         </GalleryList>
       );
     if (status === 'rejected') return <p>{error}</p>;
-
-    // ******************************
-    // if (this.state.showModal) return <ModalImg />;
   }
 }
 

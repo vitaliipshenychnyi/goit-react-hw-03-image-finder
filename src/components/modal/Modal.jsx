@@ -1,11 +1,11 @@
-import { Overlay } from "./Modal.styled";
-import { Modal } from "./Modal.styled";
+import { Overlay } from './Modal.styled';
+import { Modal } from './Modal.styled';
 
-export const ModalImg = () => {
+export const ModalImg = ({ urlBig, alt }) => {
   return (
     <Overlay>
       <Modal>
-        {/* <img src={pictureId.largeImageURL} alt="" /> */}
+        <img src={urlBig} alt={alt} />
       </Modal>
     </Overlay>
   );
