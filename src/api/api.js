@@ -7,5 +7,7 @@ export const getPictures = async (textForSearch, page) => {
   const response = await axios.get(
     `${BASE_URL}?q=${textForSearch}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
   );
-  return response.data.hits;
+  // console.log(response.data.totalHits);
+  // console.log(response.data.hits);
+  return response.data;
 };
