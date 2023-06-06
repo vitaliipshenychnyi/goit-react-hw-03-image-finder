@@ -13,7 +13,7 @@ export class ImageGallery extends Component {
     status: 'idle',
   };
 
-  // метод додавання зображень
+  // метод додавання зображень до state
   addPictures = async page => {
     const { textForSearch } = this.props;
 
@@ -35,6 +35,7 @@ export class ImageGallery extends Component {
     }
   };
 
+  // метод передавання отриманих зображень до state
   async componentDidUpdate(prevProps, _) {
     const { textForSearch } = this.props;
 
@@ -58,16 +59,12 @@ export class ImageGallery extends Component {
 
   render() {
     const { pictures, error, status } = this.state;
-
+    
     if (status === 'pending') return <Loader />;
     if (status === 'resolved')
       return (
         <GalleryList>
-          <ImageGalleryItem
-            pictures={pictures}
-            error={error}
-            bigPicture={this.toggleModal}
-          />
+          <ImageGalleryItem pictures={pictures} error={error} />
           <Button morePictures={this.addPictures} />
         </GalleryList>
       );

@@ -9,35 +9,41 @@ export class ImageGalleryItem extends Component {
     alt: '',
   };
 
-  // метод вкл/викл модального вікна
+  // метод зміни стану модального вікна
   toggleModal = () => {
-    this.setState(state => ({ showModal: !this.state.showModal }));
+    this.setState({ showModal: !this.state.showModal });
   };
 
-  test = event => {
+  // метод відкриття модального вікна
+  openModal = event => {
     this.setState({ urlBig: event.target.dataset.url });
     this.toggleModal();
   };
 
   render() {
+    const { error, pictures } = this.props;
+    const { showModal, urlBig, alt } = this.state;
+
     return (
       <>
-        {this.props.error && <p>{this.props.error.message}</p>}
+        {error && <p>{error.message}</p>}
 
-        {this.props.pictures &&
-          this.props.pictures.map(picture => (
+        {pictures &&
+          pictures.map(picture => (
             <GalleryItem key={picture.id}>
               <img
                 src={picture.webformatURL}
                 alt={picture.tags}
                 data-url={picture.largeImageURL}
-                onClick={this.test}
+                onClick={this.openModal}
               />
             </GalleryItem>
           ))}
 
-        {this.state.showModal && (
-          <ModalImg urlBig={this.state.urlBig} alt={this.state.alt} />
+        {showModal && (
+          <ModalImg closeModal={this.toggleModal}>
+            <img src={urlBig} alt={alt} />
+          </ModalImg>
         )}
       </>
     );
