@@ -1,51 +1,74 @@
-import { Component } from 'react';
 import { GalleryItem } from './ImageGalleryItem.styled';
-import { ModalImg } from 'components/modal/Modal';
 
-export class ImageGalleryItem extends Component {
-  state = {
-    showModal: false,
-    urlBig: '',
-    alt: '',
-  };
+export const ImageGalleryItem = ({ pictures, onOpenModal }) => {
+  return (
+    <>
+      {pictures &&
+        pictures.map(picture => (
+          <GalleryItem key={picture.id}>
+            <img
+              src={picture.webformatURL}
+              alt={picture.tags}
+              data-url={picture.largeImageURL}
+              onClick={onOpenModal}
+            />
+          </GalleryItem>
+        ))}
+    </>
+  );
+};
 
-  // метод зміни стану модального вікна
-  toggleModal = () => {
-    this.setState({ showModal: !this.state.showModal });
-  };
+// *******************************************************
+// ПОПЕРЕДНІЙ КОД
 
-  // метод відкриття модального вікна
-  openModal = event => {
-    this.setState({ urlBig: event.target.dataset.url });
-    this.toggleModal();
-  };
+// import { Component } from 'react';
+// import { GalleryItem } from './ImageGalleryItem.styled';
+// import { ModalImg } from 'components/modal/Modal';
 
-  render() {
-    const { error, pictures } = this.props;
-    const { showModal, urlBig, alt } = this.state;
+// export class ImageGalleryItem extends Component {
+//   state = {
+//     showModal: false,
+//     urlBig: '',
+//     alt: '',
+//   };
 
-    return (
-      <>
-        {error && <p>{error.message}</p>}
+//   // метод зміни стану модального вікна
+//   toggleModal = () => {
+//     this.setState({ showModal: !this.state.showModal });
+//   };
 
-        {pictures &&
-          pictures.map(picture => (
-            <GalleryItem key={picture.id}>
-              <img
-                src={picture.webformatURL}
-                alt={picture.tags}
-                data-url={picture.largeImageURL}
-                onClick={this.openModal}
-              />
-            </GalleryItem>
-          ))}
+//   // метод відкриття модального вікна
+//   openModal = event => {
+//     this.setState({ urlBig: event.target.dataset.url });
+//     this.toggleModal();
+//   };
 
-        {showModal && (
-          <ModalImg closeModal={this.toggleModal}>
-            <img src={urlBig} alt={alt} />
-          </ModalImg>
-        )}
-      </>
-    );
-  }
-}
+//   render() {
+//     const { error, pictures } = this.props;
+//     const { showModal, urlBig, alt } = this.state;
+
+//     return (
+//       <>
+//         {error && <p>{error.message}</p>}
+
+//         {pictures &&
+//           pictures.map(picture => (
+//             <GalleryItem key={picture.id}>
+//               <img
+//                 src={picture.webformatURL}
+//                 alt={picture.tags}
+//                 data-url={picture.largeImageURL}
+//                 onClick={this.openModal}
+//               />
+//             </GalleryItem>
+//           ))}
+
+//         {showModal && (
+//           <ModalImg closeModal={this.toggleModal}>
+//             <img src={urlBig} alt={alt} />
+//           </ModalImg>
+//         )}
+//       </>
+//     );
+//   }
+// }
