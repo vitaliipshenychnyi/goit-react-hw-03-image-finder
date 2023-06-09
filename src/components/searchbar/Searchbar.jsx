@@ -1,7 +1,17 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { toast } from 'react-toastify';
-import { Form, Header, BtnSearchForm, BtnLabel, Input } from './Searchbar.styled';
+// import { Formik, Form, Field } from 'formik';
+// import {  FormWraper,  Header,  BtnSearchForm,  BtnLabel,  Input,} from './Searchbar.styled';
+import {
+  Form,
+  Header,
+  BtnSearchForm,
+  BtnLabel,
+  Input,
+} from './Searchbar.styled';
+
+// const initialValues = { text: '' }; // для використання Formik
 
 export class Searchbar extends Component {
   state = { text: '' };
@@ -40,6 +50,26 @@ export class Searchbar extends Component {
           />
         </Form>
       </Header>
+
+      /* <Formik initialValues={initialValues}>
+<Header>
+  <FormWraper onSubmit={this.handleSubmit}>
+    <BtnSearchForm type="submit">
+      <BtnLabel>Search</BtnLabel>
+    </BtnSearchForm>
+
+    <Input
+      type="text"
+      name="text"
+      value={this.state.text}
+      autoComplete="off"
+      autoFocus
+      placeholder="Search images and photos"
+      onChange={this.handleSearch}
+    />
+  </FormWraper>
+</Header>
+</Formik> */
     );
   }
 }

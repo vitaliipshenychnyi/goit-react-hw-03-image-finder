@@ -30,6 +30,16 @@ export const Form = styled.form`
   overflow: hidden;
 `;
 
+// export const FormWraper = styled(Form)`
+//   display: flex;
+//   align-items: center;
+//   width: 100%;
+//   max-width: 600px;
+//   background-color: #fff;
+//   border-radius: 3px;
+//   overflow: hidden;
+// `;
+
 export const BtnSearchForm = styled.button`
   display: inline-block;
   width: 48px;
